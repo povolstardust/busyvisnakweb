@@ -2,12 +2,12 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   site: 'https://www.tv-doprava.cz',
   output: 'static',
-  adapter: node({ mode: 'middleware' }),
+  adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
   },
