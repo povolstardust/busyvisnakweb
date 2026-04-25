@@ -1,0 +1,56 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Lang } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  data: CollectionEntry<'fleet'>['data'];
+  lang: Lang;
+}
+
+const { data, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const specs = [
+  { key: t('fleet.specs.capacity'), val: `${data.capacity} ${t('fleet.capacity')}` },
+  { key: t('fleet.specs.year'), val: String(data.year) },
+  data.specs.euroNorm && { key: t('fleet.specs.euroNorm'), val: data.specs.euroNorm },
+  data.specs.licenseClass && { key: t('fleet.specs.licenseClass'), val: data.specs.licenseClass },
+  data.specs.length && { key: t('fleet.specs.length'), val: `${data.specs.length} m` },
+  data.specs.enginePower && { key: t('fleet.specs.enginePower'), val: data.specs.enginePower },
+].filter(Boolean) as { key: string; val: string }[];
+
+const equipment = Object.entries(data.equipment)
+  .filter(([, val]) => val === true)
+  .map(([key]) => t(`fleet.equipment.${key}`));
+---
+
+<div class="grid md:grid-cols-2 gap-6">
+  <!-- Tech specs -->
+  <div>
+    <h3 class="font-display font-bold text-navy-900 text-base mb-3">{lang === 'cs' ? 'Technické parametry' : 'Specifications'}</h3>
+    <dl class="divide-y divide-silver-200">
+      {specs.map(({ key, val }) => (
+        <div class="flex justify-between py-2.5 text-sm">
+          <dt class="text-silver-400">{key}</dt>
+          <dd class="font-semibold text-navy-800">{val}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+
+  <!-- Equipment -->
+  <div>
+    <h3 class="font-display font-bold text-navy-900 text-base mb-3">{lang === 'cs' ? 'Výbava' : 'Equipment'}</h3>
+    <ul class="grid grid-cols-1 gap-2">
+      {equipment.map(item => (
+        <li class="flex items-center gap-2 text-sm text-navy-800">
+          <svg class="w-4 h-4 text-orange-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

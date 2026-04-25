@@ -1,0 +1,81 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { useTranslations } from '@/i18n/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => data.lang === 'cs');
+  return posts.map(p => ({
+    params: { slug: p.id.replace(/^cs\//, '').replace(/\.md$/, '') },
+    props: { post: p },
+  }));
+}
+
+const { post } = Astro.props;
+const lang = 'cs';
+const t = useTranslations(lang);
+const { Content } = await render(post);
+const dateStr = post.data.pubDate.toLocaleDateString('cs-CZ', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${post.data.title} | TV-DOPRAVA Busy Višňák`}
+  description={post.data.description}
+  ogImage={post.data.image}
+>
+  <nav class="bg-silver-50 border-b border-silver-200 py-3">
+    <div class="container-wide flex items-center gap-2 text-sm text-silver-400">
+      <a href="/" class="hover:text-navy-800 transition-colors">Domů</a>
+      <span>›</span>
+      <a href="/blog" class="hover:text-navy-800 transition-colors">{t('nav.blog')}</a>
+      <span>›</span>
+      <span class="text-navy-800 font-medium line-clamp-1">{post.data.title}</span>
+    </div>
+  </nav>
+
+  <section class="bg-navy-900 text-white py-14">
+    <div class="container-wide max-w-3xl">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="badge">{post.data.category}</span>
+        <span class="text-white/50 text-sm">{post.data.readTime} {t('blog.minRead')}</span>
+        <span class="text-white/50 text-sm">· {dateStr}</span>
+      </div>
+      <h1 class="font-display font-black text-3xl md:text-4xl leading-tight mb-4">{post.data.title}</h1>
+      <p class="text-white/70 text-lg">{post.data.description}</p>
+    </div>
+  </section>
+
+  {post.data.image && (
+    <div class="bg-silver-100">
+      <div class="container-wide max-w-3xl">
+        <img src={post.data.image} alt={post.data.imageAlt ?? post.data.title} width="900" height="506" loading="eager" class="w-full rounded-b-2xl" />
+      </div>
+    </div>
+  )}
+
+  <article class="section-pad">
+    <div class="container-wide max-w-3xl">
+      <div class="prose prose-lg max-w-none
+        prose-headings:font-display prose-headings:text-navy-900
+        prose-a:text-orange-600 prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-navy-900
+      ">
+        <Content />
+      </div>
+      <div class="mt-12 pt-8 border-t border-silver-200">
+        <a href="/blog" class="btn-outline">← {t('blog.allPosts')}</a>
+      </div>
+    </div>
+  </article>
+
+  <section class="bg-orange-500 text-white py-12">
+    <div class="container-wide text-center max-w-xl mx-auto">
+      <h2 class="font-display font-bold text-2xl mb-3">Připravit poptávku?</h2>
+      <p class="text-white/85 mb-6">Ozvěte se nám a rádi vám nacenění vaši přepravu.</p>
+      <a href="/poptavka" class="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-orange-600 font-display font-bold rounded-lg hover:bg-orange-50 transition-colors">
+        Nezávazná poptávka
+      </a>
+    </div>
+  </section>
+</BaseLayout>

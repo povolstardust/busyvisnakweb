@@ -1,0 +1,61 @@
+---
+import type { Lang } from '@/i18n/utils';
+import { useTranslations, getTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tr = getTranslations(lang);
+const base = lang === 'en' ? '/en' : '';
+
+const serviceHrefs: Record<string, string> = {
+  'skolni-vylety': `${base}/sluzby/skolni-vylety`,
+  'firemni-doprava': `${base}/sluzby/firemni-doprava`,
+  'svatby': `${base}/sluzby/svatby`,
+  'mezinarodni-doprava': `${base}/sluzby/mezinarodni-doprava`,
+  'school-trips': `/en/services/school-trips`,
+  'corporate-transport': `/en/services/corporate-transport`,
+  'weddings': `/en/services/weddings`,
+  'international': `/en/services/international`,
+};
+
+const icons: Record<string, string> = {
+  'graduation-cap': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>`,
+  'briefcase': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
+  'heart': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>`,
+  'plane': `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>`,
+};
+---
+
+<section class="section-pad bg-white">
+  <div class="container-wide">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <h2 class="section-title mb-3">{t('services.title')}</h2>
+      <p class="section-subtitle mx-auto">{t('services.subtitle')}</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {tr.services.items.map((service) => (
+        <a
+          href={serviceHrefs[service.slug] ?? '#'}
+          class="group flex flex-col p-6 rounded-2xl border-2 border-silver-200 hover:border-orange-500 hover:shadow-lg transition-all duration-300"
+        >
+          <div class="w-14 h-14 rounded-xl bg-orange-500/10 text-orange-500 group-hover:bg-orange-500 group-hover:text-white flex items-center justify-center transition-all mb-5"
+               set:html={icons[service.icon]}
+          />
+          <h3 class="font-display font-bold text-navy-900 text-lg mb-2">{service.title}</h3>
+          <p class="text-silver-400 text-sm leading-relaxed flex-1">{service.short}</p>
+          <div class="mt-4 text-orange-500 text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+            {t('services.learnMore')}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

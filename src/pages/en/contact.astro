@@ -1,0 +1,81 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { company } from '@/data/company';
+
+const lang = 'en';
+---
+
+<BaseLayout
+  lang={lang}
+  title="Contact | TV-DOPRAVA Busy Višňák — Ústí nad Labem"
+  description="Contact TV-DOPRAVA Busy Višňák. Address, phone, email, opening hours. Ústí nad Labem, Czech Republic. We reply within 24 hours."
+>
+  <section class="bg-navy-900 text-white py-16">
+    <div class="container-wide max-w-2xl">
+      <h1 class="section-title text-white mb-4">Contact</h1>
+      <p class="section-subtitle text-white/70">We are here for you. Get in touch and we will be happy to help.</p>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-2 gap-12">
+        <div class="space-y-6">
+          <h2 class="font-display font-bold text-navy-900 text-xl mb-6">Direct Contact</h2>
+          <div class="space-y-5">
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-500 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-navy-900 mb-0.5">Address</p>
+                <address class="not-italic text-silver-400 text-sm">{company.address.street}<br />{company.address.zip} {company.address.city}<br />{company.address.countryEn}</address>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-500 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-navy-900 mb-0.5">Phone</p>
+                <a href={`tel:${company.phone.replace(/\s/g, '')}`} class="text-orange-600 font-medium hover:underline">{company.phone}</a>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-500 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-navy-900 mb-0.5">Email</p>
+                <a href={`mailto:${company.email}`} class="text-orange-600 font-medium hover:underline">{company.email}</a>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-500 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"/></svg>
+              </div>
+              <div>
+                <p class="font-semibold text-navy-900 mb-0.5">Opening Hours</p>
+                <p class="text-silver-400 text-sm">Mon–Fri 7:00–18:00, Sat 8:00–14:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-2xl overflow-hidden border border-silver-200 aspect-[4/3] bg-silver-100">
+            <iframe
+              title="Find us on the map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d82474.01826830887!2d13.929993!3d50.6607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47099b2d30b8a48d%3A0xa560e2b9a75e8adf!2zVXN0w60gbmFkIExhYmVt!5e0!3m2!1sen!2scz!4v0"
+              width="100%" height="100%" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full"
+            ></iframe>
+          </div>
+          <div class="bg-navy-900 text-white rounded-2xl p-6 text-center">
+            <h3 class="font-display font-bold text-xl mb-2">Request a Quote</h3>
+            <p class="text-white/70 text-sm mb-5">Fill in the form and we'll get back to you within 24 hours.</p>
+            <a href="/en/inquiry" class="btn-cta w-full justify-center">Get a Free Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

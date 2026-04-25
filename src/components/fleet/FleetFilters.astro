@@ -1,0 +1,121 @@
+---
+import type { Lang } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="fleet-filters mb-8" id="fleet-filters">
+  <!-- Category filters -->
+  <div class="flex flex-wrap gap-2 mb-4">
+    <span class="text-sm font-semibold text-navy-700 self-center mr-1">{lang === 'cs' ? 'Kapacita:' : 'Capacity:'}</span>
+    {[
+      { val: 'all', label: t('fleet.filters.all') },
+      { val: 'microbus', label: t('fleet.filters.micro') },
+      { val: 'midibus', label: t('fleet.filters.mid') },
+      { val: 'fullsize', label: t('fleet.filters.full') },
+      { val: 'luxury', label: t('fleet.filters.luxury') },
+    ].map(({ val, label }) => (
+      <button
+        class="filter-btn"
+        data-filter-type="category"
+        data-filter-val={val}
+        data-active={val === 'all' ? 'true' : 'false'}
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+
+  <!-- Equipment filters -->
+  <div class="flex flex-wrap gap-2">
+    <span class="text-sm font-semibold text-navy-700 self-center mr-1">{lang === 'cs' ? 'Výbava:' : 'Equipment:'}</span>
+    {[
+      { val: 'wifi', label: t('fleet.filters.wifi') },
+      { val: 'toilet', label: t('fleet.filters.toilet') },
+      { val: 'ac', label: t('fleet.filters.ac') },
+    ].map(({ val, label }) => (
+      <button
+        class="filter-btn"
+        data-filter-type="equipment"
+        data-filter-val={val}
+        data-active="false"
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+
+  <p id="no-results" class="hidden text-silver-400 text-sm mt-6">{lang === 'cs' ? 'Žádná vozidla neodpovídají filtru.' : 'No vehicles match the filter.'}</p>
+</div>
+
+<style>
+  .filter-btn {
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    border: 2px solid #c9d0db;
+    background: white;
+    color: #1a3358;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+  .filter-btn:hover,
+  .filter-btn[data-active="true"] {
+    border-color: #f97316;
+    background: #f97316;
+    color: white;
+  }
+</style>
+
+<script>
+  const filters = {
+    category: 'all' as string,
+    equipment: [] as string[],
+  };
+
+  function applyFilters() {
+    const cards = document.querySelectorAll<HTMLElement>('.vehicle-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const cat = card.dataset.category ?? '';
+      const catMatch = filters.category === 'all' || cat === filters.category;
+      const equipMatch = filters.equipment.every(eq => card.dataset[eq] === 'true');
+      const show = catMatch && equipMatch;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const noResults = document.getElementById('no-results');
+    if (noResults) noResults.classList.toggle('hidden', visible > 0);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.filterType as 'category' | 'equipment';
+      const val = btn.dataset.filterVal ?? '';
+
+      if (type === 'category') {
+        filters.category = val;
+        document.querySelectorAll<HTMLButtonElement>('[data-filter-type="category"]').forEach(b => {
+          b.dataset.active = (b === btn).toString();
+        });
+      } else {
+        const idx = filters.equipment.indexOf(val);
+        if (idx === -1) {
+          filters.equipment.push(val);
+          btn.dataset.active = 'true';
+        } else {
+          filters.equipment.splice(idx, 1);
+          btn.dataset.active = 'false';
+        }
+      }
+      applyFilters();
+    });
+  });
+</script>

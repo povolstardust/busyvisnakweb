@@ -1,0 +1,95 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import type { ServiceDetail } from '@/data/services';
+import type { Lang } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+  service: ServiceDetail;
+  title: string;
+  short: string;
+  metaTitle: string;
+  metaDescription: string;
+  breadcrumbLabel: string;
+}
+
+const { lang, service, title, short, metaTitle, metaDescription, breadcrumbLabel } = Astro.props;
+const t = useTranslations(lang);
+const inquiryHref = lang === 'en' ? '/en/inquiry' : '/poptavka';
+const servicesHref = lang === 'en' ? '/en/services' : '/sluzby';
+const benefits = lang === 'cs' ? service.benefitsCs : service.benefitsEn;
+const faqs = lang === 'cs' ? service.faqCs : service.faqEn;
+---
+
+<BaseLayout lang={lang} title={metaTitle} description={metaDescription}>
+  <!-- Breadcrumb -->
+  <nav class="bg-silver-50 border-b border-silver-200 py-3">
+    <div class="container-wide flex items-center gap-2 text-sm text-silver-400">
+      <a href={lang === 'en' ? '/en' : '/'} class="hover:text-navy-800 transition-colors">{lang === 'cs' ? 'Domů' : 'Home'}</a>
+      <span>›</span>
+      <a href={servicesHref} class="hover:text-navy-800 transition-colors">{t('nav.services')}</a>
+      <span>›</span>
+      <span class="text-navy-800 font-medium">{breadcrumbLabel}</span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="bg-navy-900 text-white py-16">
+    <div class="container-wide">
+      <div class="max-w-2xl">
+        <h1 class="section-title text-white mb-4">{title}</h1>
+        <p class="section-subtitle text-white/70 mb-8">{short}</p>
+        <a href={inquiryHref} class="btn-cta">{t('nav.cta')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section-pad bg-white">
+    <div class="container-wide">
+      <h2 class="section-title mb-8">{lang === 'cs' ? 'Co zahrnuje tato služba' : 'What This Service Includes'}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {benefits.map(b => (
+          <div class="flex items-start gap-3 p-4 bg-silver-50 rounded-xl">
+            <svg class="w-5 h-5 text-orange-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-navy-800 text-sm font-medium">{b}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  {faqs.length > 0 && (
+    <section class="section-pad bg-silver-50">
+      <div class="container-wide max-w-3xl">
+        <h2 class="section-title mb-8">{lang === 'cs' ? 'Časté otázky' : 'Frequently Asked Questions'}</h2>
+        <div class="space-y-3">
+          {faqs.map(({ q, a }) => (
+            <details class="group bg-white rounded-xl border border-silver-200 overflow-hidden">
+              <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none font-display font-semibold text-navy-900 hover:text-orange-600 transition-colors">
+                {q}
+                <svg class="w-5 h-5 text-silver-400 group-open:rotate-180 transition-transform shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </summary>
+              <div class="px-5 pb-5 text-silver-400 text-sm leading-relaxed border-t border-silver-100 pt-4">{a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="section-pad bg-navy-900 text-white">
+    <div class="container-wide text-center max-w-xl mx-auto">
+      <h2 class="font-display font-bold text-3xl mb-4">{t('ctaBanner.headline')}</h2>
+      <p class="text-white/70 mb-8">{t('ctaBanner.subheading')}</p>
+      <a href={inquiryHref} class="btn-cta text-base px-8 py-4">{t('ctaBanner.cta')}</a>
+    </div>
+  </section>
+</BaseLayout>

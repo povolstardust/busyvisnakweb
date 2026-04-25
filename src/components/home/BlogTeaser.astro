@@ -1,0 +1,64 @@
+---
+import type { Lang } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const allPosts = await getCollection('blog', ({ data }) => data.lang === lang);
+const posts = allPosts
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2);
+const blogHref = lang === 'en' ? '/en/blog' : '/blog';
+const postBase = lang === 'en' ? '/en/blog' : '/blog';
+---
+
+{posts.length > 0 && (
+  <section class="section-pad bg-silver-50">
+    <div class="container-wide">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div>
+          <h2 class="section-title mb-2">{t('blog.title')}</h2>
+          <p class="section-subtitle">{t('blog.subtitle')}</p>
+        </div>
+        <a href={blogHref} class="btn-outline shrink-0">{t('blog.allPosts')} →</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {posts.map(post => (
+          <a href={`${postBase}/${post.id.replace(/^(cs|en)\//, '').replace(/\.md$/, '')}`} class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col border border-silver-200">
+            {post.data.image && (
+              <div class="aspect-[16/8] bg-navy-800 overflow-hidden">
+                <img
+                  src={post.data.image}
+                  alt={post.data.imageAlt ?? post.data.title}
+                  width="640"
+                  height="320"
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            )}
+            <div class="p-6 flex flex-col flex-1">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="badge badge-silver">{post.data.category}</span>
+                <span class="text-silver-400 text-xs">{post.data.readTime} {t('blog.minRead')}</span>
+              </div>
+              <h3 class="font-display font-bold text-navy-900 text-lg leading-snug mb-2 group-hover:text-orange-600 transition-colors">
+                {post.data.title}
+              </h3>
+              <p class="text-silver-400 text-sm leading-relaxed flex-1">{post.data.description}</p>
+              <div class="mt-4 text-orange-500 text-sm font-semibold flex items-center gap-1">
+                {t('blog.readMore')} →
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

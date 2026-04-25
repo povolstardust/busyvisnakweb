@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import FleetFilters from '@/components/fleet/FleetFilters.astro';
+import VehicleCard from '@/components/fleet/VehicleCard.astro';
+import { getCollection } from 'astro:content';
+import { useTranslations } from '@/i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const vehicles = await getCollection('fleet');
+vehicles.sort((a, b) => b.data.capacity - a.data.capacity);
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t('fleet.title')} | TV-DOPRAVA Busy Višňák`}
+  description={`${t('fleet.subtitle')} Coach hire Ústí nad Labem.`}
+>
+  <section class="bg-navy-900 text-white py-16">
+    <div class="container-wide">
+      <div class="max-w-2xl">
+        <span class="badge mb-4">{vehicles.length} vehicles</span>
+        <h1 class="section-title text-white mb-4">{t('fleet.title')}</h1>
+        <p class="section-subtitle text-white/70">{t('fleet.subtitle')}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-silver-50">
+    <div class="container-wide">
+      <FleetFilters lang={lang} />
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {vehicles.map(vehicle => (
+          <VehicleCard vehicle={vehicle} lang={lang} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

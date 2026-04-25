@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugEn === 'school-trips')!;
+---
+
+<ServicePage
+  lang="en"
+  service={service}
+  title="School Trip Coach Hire"
+  short="Safe and reliable transport for schools and kindergartens on trips across the Czech Republic and abroad. Experienced drivers, modern coaches with safety belts."
+  metaTitle="School Trip Coach Hire | TV-DOPRAVA Busy Višňák Czech Republic"
+  metaDescription="Coach hire for school trips in the Czech Republic and Europe. Safe student transport from Ústí nad Labem. Modern vehicles, experienced drivers, passenger insurance."
+  breadcrumbLabel="School Trips"
+/>

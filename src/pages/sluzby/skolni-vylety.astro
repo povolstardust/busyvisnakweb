@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugCs === 'skolni-vylety')!;
+---
+
+<ServicePage
+  lang="cs"
+  service={service}
+  title="Školní výlety autobusem"
+  short="Bezpečná a spolehlivá doprava pro školy a školky na výlety po celé ČR i zahraničí. Zkušení řidiči, moderní vozy s bezpečnostními pásy."
+  metaTitle="Školní výlety autobusem | Pronájem autobusu pro školy | TV-DOPRAVA Ústí nad Labem"
+  metaDescription="Pronájem autobusu na školní výlet. Bezpečná doprava pro školy a školky z Ústí nad Labem po celé ČR a do zahraničí. Moderní vozy, zkušení řidiči, pojištění."
+  breadcrumbLabel="Školní výlety"
+/>

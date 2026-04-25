@@ -1,0 +1,57 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const lang = 'en';
+---
+
+<BaseLayout
+  lang={lang}
+  title="About Us | TV-DOPRAVA Busy Višňák — 30 Years of Coach Transport"
+  description="TV-DOPRAVA Busy Višňák — a family-owned coach company from Ústí nad Labem, Czech Republic. 30 years of experience, modern fleet, experienced drivers."
+>
+  <section class="bg-navy-900 text-white py-16">
+    <div class="container-wide max-w-2xl">
+      <span class="badge mb-4">Since 1994</span>
+      <h1 class="section-title text-white mb-4">About Us</h1>
+      <p class="section-subtitle text-white/70">A family business with tradition since 1994.</p>
+    </div>
+  </section>
+
+  <section class="bg-orange-500 text-white py-10">
+    <div class="container-wide">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {[
+          { num: '30+', label: 'years of experience' },
+          { num: '8+', label: 'vehicles in fleet' },
+          { num: '15', label: 'employees' },
+          { num: '500+', label: 'journeys per year' },
+        ].map(({ num, label }) => (
+          <div>
+            <div class="font-display font-black text-4xl md:text-5xl">{num}</div>
+            <div class="text-white/80 text-sm mt-1">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-white">
+    <div class="container-wide max-w-3xl">
+      <h2 class="section-title mb-8">Our Story</h2>
+      <div class="prose max-w-none text-navy-800 leading-relaxed space-y-4">
+        <p>TV-DOPRAVA was founded in 1994 by Mr. Višňák in Ústí nad Labem, Czech Republic. Starting with a single minibus and a passion for reliable transport, the company has grown into a respected regional coach operator.</p>
+        <p>Over three decades, we have built lasting relationships with schools, corporations, travel agencies and private clients throughout the Czech Republic and Central Europe.</p>
+        <p>Today, our modern fleet of 8+ vehicles — from minibuses to full-size luxury coaches — serves hundreds of clients annually. Every vehicle meets the highest safety standards and is equipped with air conditioning, WiFi and USB charging.</p>
+        <p>Our drivers are fully certified professionals with international route experience and regular safety training. Passenger safety is always our highest priority.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-navy-900 text-white">
+    <div class="container-wide text-center max-w-lg mx-auto">
+      <h2 class="font-display font-bold text-3xl mb-4">Let's Work Together</h2>
+      <p class="text-white/70 mb-8">We'll be happy to prepare a tailored quote for your needs.</p>
+      <a href="/en/inquiry" class="btn-cta text-base px-8 py-4">Get a Free Quote</a>
+    </div>
+  </section>
+</BaseLayout>

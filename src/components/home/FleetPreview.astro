@@ -1,0 +1,36 @@
+---
+import VehicleCard from '@/components/fleet/VehicleCard.astro';
+import type { Lang } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const allVehicles = await getCollection('fleet');
+const featured = allVehicles.filter(v => v.data.featured).slice(0, 3);
+const fleetHref = lang === 'en' ? '/en/fleet' : '/flotila';
+---
+
+<section class="section-pad bg-silver-50">
+  <div class="container-wide">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+      <div>
+        <h2 class="section-title mb-2">{t('fleet.title')}</h2>
+        <p class="section-subtitle">{t('fleet.subtitle')}</p>
+      </div>
+      <a href={fleetHref} class="btn-outline shrink-0">
+        {t('fleet.cta')} →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {featured.map(vehicle => (
+        <VehicleCard vehicle={vehicle} lang={lang} />
+      ))}
+    </div>
+  </div>
+</section>

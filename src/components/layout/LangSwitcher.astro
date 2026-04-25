@@ -1,0 +1,28 @@
+---
+import type { Lang } from '@/i18n/utils';
+import { getAlternateUrl, getTranslations } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const altLang: Lang = lang === 'cs' ? 'en' : 'cs';
+const altUrl = getAlternateUrl(Astro.url, altLang);
+const t = getTranslations(altLang);
+---
+
+<a
+  href={altUrl}
+  class="flex items-center gap-1.5 text-sm font-semibold text-white/80 hover:text-white transition-colors px-3 py-1.5 rounded-md hover:bg-white/10"
+  lang={altLang}
+  title={`Switch to ${t.langLabel}`}
+>
+  {altLang === 'en' ? (
+    <span class="text-base">🇬🇧</span>
+    <span class="hidden sm:inline">EN</span>
+  ) : (
+    <span class="text-base">🇨🇿</span>
+    <span class="hidden sm:inline">CZ</span>
+  )}
+</a>

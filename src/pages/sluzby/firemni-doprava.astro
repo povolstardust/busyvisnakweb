@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugCs === 'firemni-doprava')!;
+---
+
+<ServicePage
+  lang="cs"
+  service={service}
+  title="Firemní doprava a teambuildingové transfery"
+  short="Reprezentativní přesuny zaměstnanců, teambuildingy, konference a firemní akce. Fakturujeme na IČO, zajišťujeme přesnost a komfort."
+  metaTitle="Firemní doprava autobusem | Pronájem autobusu pro firmy | TV-DOPRAVA"
+  metaDescription="Firemní autobusová doprava z Ústí nad Labem. Teambuildingy, konference, transfery zaměstnanců. Fakturace na IČO, moderní vozy s WiFi a klimatizací."
+  breadcrumbLabel="Firemní doprava"
+/>

@@ -1,0 +1,111 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const lang = 'cs';
+const t = useTranslations(lang);
+
+const timeline = [
+  { year: 1994, event: 'Založení firmy TV-DOPRAVA panem Višňákem v Ústí nad Labem. Start s jedním mikrobusem.' },
+  { year: 2000, event: 'Rozšíření vozového parku na 5 vozidel. První mezinárodní zájezdy do Německa a Rakouska.' },
+  { year: 2008, event: 'Investice do prvních plnorozměrných autobusů. Zahájení pravidelné spolupráce se školami.' },
+  { year: 2015, event: 'Modernizace celého vozového parku. Certifikace kvality ISO. Rozšíření do Německa.' },
+  { year: 2020, event: 'Přechod na Euro 6 vozidla. Zavedení WiFi a USB nabíjení do všech nových autobusů.' },
+  { year: 2024, event: '30 let na trhu. Flotila 8+ vozidel, 15 zaměstnanců, stovky spokojených zákazníků ročně.' },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title="O nás | TV-DOPRAVA Busy Višňák — 30 let autobusové dopravy"
+  description="Rodinná firma TV-DOPRAVA Busy Višňák z Ústí nad Labem. 30 let zkušeností v autobusové dopravě. Zkušení řidiči, moderní vozový park, bezpečnost na prvním místě."
+>
+  <!-- Hero -->
+  <section class="bg-navy-900 text-white py-16">
+    <div class="container-wide max-w-2xl">
+      <span class="badge mb-4">Od roku 1994</span>
+      <h1 class="section-title text-white mb-4">{t('about.title')}</h1>
+      <p class="section-subtitle text-white/70">{t('about.subtitle')}</p>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="bg-orange-500 text-white py-10">
+    <div class="container-wide">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {[
+          { num: '30+', label: 'let zkušeností' },
+          { num: '8+', label: 'vozidel ve flotile' },
+          { num: '15', label: 'zaměstnanců' },
+          { num: '500+', label: 'cest ročně' },
+        ].map(({ num, label }) => (
+          <div>
+            <div class="font-display font-black text-4xl md:text-5xl">{num}</div>
+            <div class="text-white/80 text-sm mt-1">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section-pad bg-white">
+    <div class="container-wide max-w-3xl">
+      <h2 class="section-title mb-12 text-center">{t('about.historyTitle')}</h2>
+      <div class="relative">
+        <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-silver-200"></div>
+        <div class="space-y-8">
+          {timeline.map(({ year, event }) => (
+            <div class="relative flex gap-6 pl-16">
+              <div class="absolute left-0 w-12 h-12 rounded-full bg-orange-500 text-white flex items-center justify-center font-display font-bold text-xs text-center leading-tight">
+                {year}
+              </div>
+              <div class="flex-1 pb-2">
+                <p class="text-navy-800 leading-relaxed">{event}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Safety & certifications -->
+  <section class="section-pad bg-silver-50">
+    <div class="container-wide">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="section-title mb-6">{t('about.safetyTitle')}</h2>
+          <div class="space-y-4 text-navy-800 leading-relaxed">
+            <p>Bezpečnost cestujících je naší nejvyšší prioritou. Každé vozidlo prochází pravidelnou technickou kontrolou a servisní prohlídkou dle předepsaných intervalů.</p>
+            <p>Všichni naši řidiči jsou držiteli profesního průkazu způsobilosti (Průkaz řidiče profesionála) a absolvují pravidelná školení v oblasti bezpečné jízdy a první pomoci.</p>
+            <p>Naše vozidla jsou vybavena moderními bezpečnostními systémy — ABS, ESP, adaptivní tempomat a bezpečnostní pásy na každém místě.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          {[
+            { icon: '🛡️', title: 'Technická kontrola', desc: 'Pravidelné STK a servisní prohlídky' },
+            { icon: '📋', title: 'Průkaz způsobilosti', desc: 'Všichni řidiči s profesním průkazem' },
+            { icon: '🏥', title: 'První pomoc', desc: 'Školení řidičů v první pomoci' },
+            { icon: '📱', title: 'Pojištění', desc: 'Komplexní pojištění vozidel i pasažérů' },
+          ].map(({ icon, title, desc }) => (
+            <div class="bg-white rounded-xl p-5 border border-silver-200">
+              <div class="text-3xl mb-3">{icon}</div>
+              <h3 class="font-display font-bold text-navy-900 text-sm mb-1">{title}</h3>
+              <p class="text-silver-400 text-xs">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-pad bg-navy-900 text-white">
+    <div class="container-wide text-center max-w-lg mx-auto">
+      <h2 class="font-display font-bold text-3xl mb-4">Pojďme spolupracovat</h2>
+      <p class="text-white/70 mb-8">Rádi vám připravíme nabídku přesně na míru vašim potřebám.</p>
+      <a href="/poptavka" class="btn-cta text-base px-8 py-4">Nezávazná poptávka</a>
+    </div>
+  </section>
+</BaseLayout>

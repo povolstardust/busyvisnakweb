@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugCs === 'svatby')!;
+---
+
+<ServicePage
+  lang="cs"
+  service={service}
+  title="Svatební převozy hostů autobusem"
+  short="Diskrétní, spolehlivá a elegantní přeprava svatebních hostů. Přizpůsobíme se průběhu vašeho dne, jedeme i v noci."
+  metaTitle="Svatební převozy autobusem | Pronájem autobusu na svatbu | TV-DOPRAVA"
+  metaDescription="Pronájem autobusu na svatbu. Diskrétní a spolehlivý rozvoz hostů. Ústí nad Labem a okolí. Čisté vozy, zkušení řidiči, noční jízdy bez problémů."
+  breadcrumbLabel="Svatby"
+/>

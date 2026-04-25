@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugCs === 'mezinarodni-doprava')!;
+---
+
+<ServicePage
+  lang="cs"
+  service={service}
+  title="Mezinárodní autobusová doprava a zájezdy"
+  short="Komfortní cestování do celé Evropy. Zkušení řidiči se znalostí zahraničních tras, plně vybavené autobusy pro dálkové jízdy."
+  metaTitle="Mezinárodní autobusová doprava | Zájezdy do zahraničí | TV-DOPRAVA Ústí nad Labem"
+  metaDescription="Mezinárodní autobusová doprava z Ústí nad Labem do celé Evropy. Zájezdy, skupinové výjezdy, turistické akce. Plně vybavené autobusy, zkušení řidiči."
+  breadcrumbLabel="Mezinárodní doprava"
+/>

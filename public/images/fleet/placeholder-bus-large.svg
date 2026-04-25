@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="533" viewBox="0 0 800 533">
+  <rect width="800" height="533" fill="#0d1f3c"/>
+  <rect x="60" y="160" width="680" height="240" rx="30" fill="#1a3358"/>
+  <rect x="60" y="290" width="680" height="110" rx="15" fill="#244778"/>
+  <!-- wheels -->
+  <circle cx="200" cy="400" r="60" fill="#0a1628" stroke="#9aa3b0" stroke-width="6"/>
+  <circle cx="200" cy="400" r="30" fill="#244778"/>
+  <circle cx="600" cy="400" r="60" fill="#0a1628" stroke="#9aa3b0" stroke-width="6"/>
+  <circle cx="600" cy="400" r="30" fill="#244778"/>
+  <!-- windows -->
+  <rect x="90" y="175" width="80" height="60" rx="8" fill="#93c5fd" opacity="0.6"/>
+  <rect x="185" y="175" width="80" height="60" rx="8" fill="#93c5fd" opacity="0.6"/>
+  <rect x="280" y="175" width="80" height="60" rx="8" fill="#93c5fd" opacity="0.6"/>
+  <rect x="375" y="175" width="80" height="60" rx="8" fill="#93c5fd" opacity="0.6"/>
+  <rect x="470" y="175" width="80" height="60" rx="8" fill="#93c5fd" opacity="0.6"/>
+  <rect x="565" y="175" width="80" height="60" rx="8" fill="#93c5fd" opacity="0.6"/>
+  <!-- logo area -->
+  <rect x="90" y="250" width="160" height="30" rx="4" fill="#f97316" opacity="0.8"/>
+  <text x="170" y="271" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="white">BUSY VIŠŇÁK</text>
+  <!-- stripe -->
+  <rect x="60" y="280" width="680" height="8" fill="#f97316" opacity="0.7"/>
+</svg>

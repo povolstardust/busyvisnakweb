@@ -1,0 +1,92 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SpecTable from '@/components/fleet/SpecTable.astro';
+import { getCollection, render } from 'astro:content';
+import { useTranslations } from '@/i18n/utils';
+
+export async function getStaticPaths() {
+  const vehicles = await getCollection('fleet');
+  return vehicles.map(v => ({
+    params: { slug: v.id.replace(/\.md$/, '') },
+    props: { vehicle: v },
+  }));
+}
+
+const { vehicle } = Astro.props;
+const { data } = vehicle;
+const slug = vehicle.id.replace(/\.md$/, '');
+const lang = 'cs';
+const t = useTranslations(lang);
+const { Content } = await render(vehicle);
+---
+
+<BaseLayout
+  lang={lang}
+  title={data.metaTitle ?? `${data.name} | TV-DOPRAVA Busy Višňák`}
+  description={data.metaDescription ?? `${data.name} — ${data.capacity} míst. ${data.equipment.airConditioning ? 'Klimatizace. ' : ''}${data.equipment.wifi ? 'WiFi. ' : ''}Pronájem autobusu Ústí nad Labem.`}
+>
+  <nav class="bg-silver-50 border-b border-silver-200 py-3" aria-label="Drobečková navigace">
+    <div class="container-wide flex items-center gap-2 text-sm text-silver-400">
+      <a href="/" class="hover:text-navy-800 transition-colors">Domů</a>
+      <span>›</span>
+      <a href="/flotila" class="hover:text-navy-800 transition-colors">{t('fleet.title')}</a>
+      <span>›</span>
+      <span class="text-navy-800 font-medium">{data.shortName}</span>
+    </div>
+  </nav>
+
+  <section class="bg-navy-900">
+    <div class="container-wide py-10">
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <img
+            src={data.coverImage}
+            alt={data.name}
+            width="800"
+            height="533"
+            loading="eager"
+            fetchpriority="high"
+            class="rounded-xl w-full object-cover aspect-[3/2]"
+          />
+        </div>
+        <div class="text-white">
+          <span class="badge mb-4">{data.capacity} {t('fleet.capacity')}</span>
+          <h1 class="font-display font-bold text-3xl md:text-4xl mb-2">{data.name}</h1>
+          <p class="text-white/60 mb-6">{data.year} · {data.specs.euroNorm}</p>
+          {data.priceFrom && (
+            <p class="text-orange-400 font-semibold text-lg mb-6">{data.priceFrom}</p>
+          )}
+          <a href="/poptavka" class="btn-cta">{t('fleet.inquiryCta')}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2">
+          <h2 class="font-display font-bold text-2xl text-navy-900 mb-6">O tomto voze</h2>
+          <div class="prose prose-lg max-w-none mb-10
+            prose-headings:font-display prose-headings:text-navy-900
+            prose-a:text-orange-600 prose-strong:text-navy-900
+          ">
+            <Content />
+          </div>
+        </div>
+        <div>
+          <div class="bg-silver-50 rounded-2xl p-6 sticky top-24">
+            <SpecTable data={data} lang={lang} />
+            <div class="mt-6 pt-6 border-t border-silver-200">
+              <a href="/poptavka" class="btn-cta w-full justify-center text-center block">{t('fleet.inquiryCta')}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container-wide pb-12">
+    <a href="/flotila" class="btn-outline">← {t('fleet.title')}</a>
+  </div>
+</BaseLayout>

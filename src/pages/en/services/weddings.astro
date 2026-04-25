@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugEn === 'weddings')!;
+---
+
+<ServicePage
+  lang="en"
+  service={service}
+  title="Wedding Guest Transport"
+  short="Discreet, reliable and elegant transport for wedding guests. We adapt to your event schedule, including late-night runs."
+  metaTitle="Wedding Coach Hire Czech Republic | TV-DOPRAVA Busy Višňák"
+  metaDescription="Coach hire for weddings in the Czech Republic. Discreet and reliable guest transport. Clean vehicles, experienced drivers, available late at night."
+  breadcrumbLabel="Weddings"
+/>

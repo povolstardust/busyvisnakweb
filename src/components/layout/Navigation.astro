@@ -1,0 +1,152 @@
+---
+import LangSwitcher from './LangSwitcher.astro';
+import type { Lang } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
+import { company } from '@/data/company';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const base = lang === 'en' ? '/en' : '';
+
+const navLinks = [
+  { href: `${base}/flotila`, hrefEn: '/en/fleet', label: t('nav.fleet') },
+  { href: `${base}/sluzby`, hrefEn: '/en/services', label: t('nav.services') },
+  { href: `${base}/blog`, hrefEn: '/en/blog', label: t('nav.blog') },
+  { href: `${base}/o-nas`, hrefEn: '/en/about', label: t('nav.about') },
+  { href: `${base}/kontakt`, hrefEn: '/en/contact', label: t('nav.contact') },
+];
+
+const inquiryHref = lang === 'en' ? '/en/inquiry' : '/poptavka';
+const currentPath = Astro.url.pathname;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="site-header">
+  <div class="container-wide">
+    <nav class="flex items-center justify-between h-16 md:h-20" aria-label="Hlavní navigace">
+      <!-- Logo -->
+      <a href={lang === 'en' ? '/en' : '/'} class="flex items-center gap-2 group" aria-label={company.shortName}>
+        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center font-display font-black text-white text-sm group-hover:bg-orange-400 transition-colors">
+          BV
+        </div>
+        <div class="hidden sm:block">
+          <div class="font-display font-bold text-white text-base leading-tight">Busy Višňák</div>
+          <div class="text-white/60 text-xs">TV-DOPRAVA s.r.o.</div>
+        </div>
+      </a>
+
+      <!-- Desktop nav -->
+      <ul class="hidden lg:flex items-center gap-1" role="list">
+        {navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                currentPath.startsWith(link.href) && link.href !== '/'
+                  ? 'text-white bg-white/15'
+                  : 'text-white/80 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Right side -->
+      <div class="flex items-center gap-2">
+        <LangSwitcher lang={lang} />
+        <a href={inquiryHref} class="btn-cta text-sm px-4 py-2 hidden sm:inline-flex">
+          {t('nav.cta')}
+        </a>
+        <!-- Mobile menu button -->
+        <button
+          id="menu-toggle"
+          class="lg:hidden p-2 rounded-md text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+          aria-label="Otevřít menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg id="icon-menu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden bg-navy-900 border-t border-white/10"
+    role="navigation"
+    aria-label="Mobilní menu"
+  >
+    <div class="container-wide py-4 flex flex-col gap-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class="px-4 py-3 rounded-md text-white/80 hover:text-white hover:bg-white/10 font-medium transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a href={inquiryHref} class="btn-cta mt-3 justify-center">
+        {t('nav.cta')}
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Spacer for fixed header -->
+<div class="h-16 md:h-20"></div>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  // Scroll effect
+  function updateHeader() {
+    if (!header) return;
+    if (window.scrollY > 20) {
+      header.classList.add('bg-navy-900', 'shadow-lg');
+    } else {
+      header.classList.remove('bg-navy-900', 'shadow-lg');
+    }
+  }
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
+
+  // Mobile menu toggle
+  toggle?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.classList.contains('hidden') === false;
+    mobileMenu?.classList.toggle('hidden', isOpen);
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    iconMenu?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+    if (!header) return;
+    if (!isOpen) {
+      header.classList.add('bg-navy-900');
+    } else if (window.scrollY <= 20) {
+      header.classList.remove('bg-navy-900');
+    }
+  });
+</script>
+
+<style>
+  #site-header {
+    background: linear-gradient(to bottom, rgba(10,22,40,0.95) 0%, rgba(10,22,40,0) 100%);
+  }
+  #site-header.bg-navy-900 {
+    background: #0a1628;
+  }
+</style>

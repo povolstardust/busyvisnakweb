@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugEn === 'international')!;
+---
+
+<ServicePage
+  lang="en"
+  service={service}
+  title="International Coach Tours"
+  short="Comfortable travel across Europe. Experienced drivers with international route knowledge, fully equipped coaches for long-distance journeys."
+  metaTitle="International Coach Tours from Czech Republic | TV-DOPRAVA Busy Višňák"
+  metaDescription="International coach hire from Czech Republic across Europe. Group tours, school trips abroad, tourist excursions. Fully equipped coaches, experienced drivers."
+  breadcrumbLabel="International Tours"
+/>

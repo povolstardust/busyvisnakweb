@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/home/HeroSection.astro';
+import BenefitPillars from '@/components/home/BenefitPillars.astro';
+import FleetPreview from '@/components/home/FleetPreview.astro';
+import ServicesTeaser from '@/components/home/ServicesTeaser.astro';
+import TestimonialsCarousel from '@/components/home/TestimonialsCarousel.astro';
+import CtaBanner from '@/components/home/CtaBanner.astro';
+import BlogTeaser from '@/components/home/BlogTeaser.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const lang = 'cs';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('meta.defaultTitle')}
+  description={t('meta.defaultDescription')}
+>
+  <HeroSection lang={lang} />
+  <BenefitPillars lang={lang} />
+  <FleetPreview lang={lang} />
+  <ServicesTeaser lang={lang} />
+  <TestimonialsCarousel lang={lang} />
+  <CtaBanner lang={lang} />
+  <BlogTeaser lang={lang} />
+</BaseLayout>

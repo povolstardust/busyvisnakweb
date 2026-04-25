@@ -1,0 +1,16 @@
+---
+import ServicePage from '@/components/services/ServicePage.astro';
+import { servicesDetail } from '@/data/services';
+
+const service = servicesDetail.find(s => s.slugEn === 'corporate-transport')!;
+---
+
+<ServicePage
+  lang="en"
+  service={service}
+  title="Corporate Coach Transport"
+  short="Representative employee transfers, team buildings, conferences and corporate events. Corporate invoicing, punctuality and comfort guaranteed."
+  metaTitle="Corporate Coach Hire Czech Republic | TV-DOPRAVA Busy Višňák"
+  metaDescription="Corporate coach hire in the Czech Republic. Employee transfers, team buildings, conference shuttles. Corporate invoicing, modern coaches with WiFi and air conditioning."
+  breadcrumbLabel="Corporate Transport"
+/>

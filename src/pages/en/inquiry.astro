@@ -1,0 +1,58 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import InquiryForm from '@/components/inquiry/InquiryForm.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const lang = 'en';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t('inquiry.title')} | TV-DOPRAVA Busy Višňák`}
+  description={t('inquiry.subtitle')}
+>
+  <section class="bg-navy-900 text-white py-16">
+    <div class="container-wide">
+      <div class="max-w-xl">
+        <span class="badge mb-4">Reply within 24 hours</span>
+        <h1 class="section-title text-white mb-4">{t('inquiry.title')}</h1>
+        <p class="section-subtitle text-white/70">{t('inquiry.subtitle')}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-silver-50">
+    <div class="container-wide">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-silver-200">
+            <InquiryForm lang={lang} />
+          </div>
+        </div>
+        <aside class="space-y-6">
+          <div class="bg-navy-900 text-white rounded-2xl p-6">
+            <h2 class="font-display font-bold text-lg mb-4">Why Choose Us?</h2>
+            <ul class="space-y-3 text-sm text-white/80">
+              {[
+                '30 years in business, hundreds of happy clients',
+                'Modern fleet with full equipment',
+                'Trained and experienced drivers',
+                'Punctuality and reliability',
+                'Corporate invoicing available',
+                'Passenger insurance included',
+              ].map(item => (
+                <li class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-orange-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

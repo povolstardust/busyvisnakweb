@@ -1,0 +1,60 @@
+---
+import { company } from '@/data/company';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  lang: 'cs' | 'en';
+  canonicalUrl?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og-default.jpg',
+  lang,
+  canonicalUrl,
+  noindex = false,
+} = Astro.props;
+
+const canonical = canonicalUrl ?? Astro.url.href;
+const altLang = lang === 'cs' ? 'en' : 'cs';
+const currentPath = Astro.url.pathname;
+const altPath = lang === 'cs'
+  ? '/en' + (currentPath === '/' ? '' : currentPath)
+  : (currentPath.replace(/^\/en/, '') || '/');
+const altUrl = new URL(altPath, company.web).href;
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang={lang === 'cs' ? 'cs-CZ' : 'en-US'} href={canonical} />
+<link rel="alternate" hreflang={altLang === 'cs' ? 'cs-CZ' : 'en-US'} href={altUrl} />
+<link rel="alternate" hreflang="x-default" href={new URL('/', company.web).href} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(ogImage, company.web).href} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={company.name} />
+<meta property="og:locale" content={lang === 'cs' ? 'cs_CZ' : 'en_US'} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(ogImage, company.web).href} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="sitemap" href="/sitemap-index.xml" />

@@ -1,0 +1,40 @@
+---
+import Navigation from '@/components/layout/Navigation.astro';
+import Footer from '@/components/layout/Footer.astro';
+import SEOHead from '@/components/layout/SEOHead.astro';
+import type { Lang } from '@/i18n/utils';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  ogImage?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  class?: string;
+}
+
+const { title, description, lang, ogImage, canonicalUrl, noindex, class: className } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang === 'cs' ? 'cs' : 'en'} class="scroll-smooth">
+  <head>
+    <SEOHead
+      title={title}
+      description={description}
+      lang={lang}
+      ogImage={ogImage}
+      canonicalUrl={canonicalUrl}
+      noindex={noindex}
+    />
+  </head>
+  <body class={className}>
+    <Navigation lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>
