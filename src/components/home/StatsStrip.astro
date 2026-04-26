@@ -1,0 +1,37 @@
+---
+import type { Lang } from '@/i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const stats = lang === 'cs'
+  ? [
+      { value: '30+', label: 'let na trhu', sub: 'Rodinná firma od 1994' },
+      { value: '500+', label: 'cest ročně', sub: 'Školní, firemní i soukromé' },
+      { value: '3', label: 'moderní vozidla', sub: '19–55 míst k dispozici' },
+      { value: '4.9★', label: 'průměrné hodnocení', sub: 'Spokojení zákazníci' },
+    ]
+  : [
+      { value: '30+', label: 'years on market', sub: 'Family business since 1994' },
+      { value: '500+', label: 'trips per year', sub: 'School, corporate & private' },
+      { value: '3', label: 'modern vehicles', sub: '19–55 seats available' },
+      { value: '4.9★', label: 'average rating', sub: 'Satisfied customers' },
+    ];
+---
+
+<div class="bg-navy-800 border-y border-white/8">
+  <div class="container-wide">
+    <div class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/8">
+      {stats.map((s, i) => (
+        <div class={`py-7 px-6 text-center reveal reveal-delay-${i + 1}`}>
+          <p class="font-display font-black text-3xl md:text-4xl text-orange-400 leading-none mb-1">{s.value}</p>
+          <p class="text-white text-sm font-semibold mb-0.5">{s.label}</p>
+          <p class="text-white/40 text-xs hidden sm:block">{s.sub}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

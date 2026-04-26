@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import HeroSection from '@/components/home/HeroSection.astro';
+import StatsStrip from '@/components/home/StatsStrip.astro';
 import BenefitPillars from '@/components/home/BenefitPillars.astro';
 import FleetPreview from '@/components/home/FleetPreview.astro';
 import ServicesTeaser from '@/components/home/ServicesTeaser.astro';
@@ -19,6 +20,7 @@ const t = useTranslations(lang);
   description={t('meta.defaultDescription')}
 >
   <HeroSection lang={lang} />
+  <StatsStrip lang={lang} />
   <BenefitPillars lang={lang} />
   <FleetPreview lang={lang} />
   <ServicesTeaser lang={lang} />

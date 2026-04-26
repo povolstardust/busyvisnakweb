@@ -20,22 +20,25 @@ const icons: Record<string, string> = {
 
 <section class="section-pad bg-white">
   <div class="container-wide">
-    <div class="text-center max-w-2xl mx-auto mb-12">
+    <div class="text-center max-w-2xl mx-auto mb-14 reveal">
       <h2 class="section-title mb-3">{t('benefits.title')}</h2>
       <p class="section-subtitle mx-auto">{t('benefits.subtitle')}</p>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {tr.benefits.items.map((item) => (
-        <div class="group p-6 rounded-2xl bg-silver-50 hover:bg-navy-900 transition-colors duration-300 flex flex-col gap-4">
-          <div class="w-14 h-14 rounded-xl bg-orange-500/10 group-hover:bg-orange-500/20 text-orange-500 flex items-center justify-center transition-colors"
+      {tr.benefits.items.map((item, i) => (
+        <div class={`group relative p-7 rounded-2xl bg-silver-50 border border-silver-100 hover:border-orange-400/40 hover:shadow-lg hover:shadow-orange-500/8 transition-all duration-300 flex flex-col gap-5 reveal reveal-delay-${i + 1}`}>
+          <!-- Orange accent bar top -->
+          <div class="absolute top-0 left-6 right-6 h-0.5 rounded-b-full bg-orange-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+
+          <div class="w-14 h-14 rounded-xl bg-orange-500/10 group-hover:bg-orange-500/18 text-orange-500 flex items-center justify-center transition-colors duration-300"
                set:html={icons[item.icon]}
           />
           <div>
-            <h3 class="font-display font-bold text-navy-900 group-hover:text-white text-lg mb-1.5 transition-colors">
+            <h3 class="font-display font-bold text-navy-900 text-lg mb-2 leading-snug">
               {item.title}
             </h3>
-            <p class="text-silver-400 group-hover:text-white/70 text-sm leading-relaxed transition-colors">
+            <p class="text-silver-400 text-sm leading-relaxed">
               {item.desc}
             </p>
           </div>

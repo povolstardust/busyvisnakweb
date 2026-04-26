@@ -44,13 +44,18 @@ const currentPath = Astro.url.pathname;
           <li>
             <a
               href={link.href}
-              class={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              class={`relative px-3 py-2 text-sm font-medium transition-colors group/nav ${
                 currentPath.startsWith(link.href) && link.href !== '/'
-                  ? 'text-white bg-white/15'
-                  : 'text-white/80 hover:text-white hover:bg-white/10'
+                  ? 'text-white'
+                  : 'text-white/75 hover:text-white'
               }`}
             >
               {link.label}
+              <span class={`absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-orange-400 transition-transform origin-left ${
+                currentPath.startsWith(link.href) && link.href !== '/'
+                  ? 'scale-x-100'
+                  : 'scale-x-0 group-hover/nav:scale-x-100'
+              }`}></span>
             </a>
           </li>
         ))}
@@ -118,9 +123,9 @@ const currentPath = Astro.url.pathname;
   function updateHeader() {
     if (!header) return;
     if (window.scrollY > 20) {
-      header.classList.add('bg-navy-900', 'shadow-lg');
+      header.classList.add('scrolled');
     } else {
-      header.classList.remove('bg-navy-900', 'shadow-lg');
+      header.classList.remove('scrolled');
     }
   }
   updateHeader();
@@ -135,18 +140,22 @@ const currentPath = Astro.url.pathname;
     iconClose?.classList.toggle('hidden', isOpen);
     if (!header) return;
     if (!isOpen) {
-      header.classList.add('bg-navy-900');
+      header.classList.add('scrolled');
     } else if (window.scrollY <= 20) {
-      header.classList.remove('bg-navy-900');
+      header.classList.remove('scrolled');
     }
   });
 </script>
 
 <style>
   #site-header {
-    background: linear-gradient(to bottom, rgba(10,22,40,0.95) 0%, rgba(10,22,40,0) 100%);
+    background: linear-gradient(to bottom, rgba(10,22,40,0.85) 0%, rgba(10,22,40,0) 100%);
+    backdrop-filter: blur(0px);
+    transition: background 300ms ease, backdrop-filter 300ms ease, box-shadow 300ms ease;
   }
-  #site-header.bg-navy-900 {
-    background: #0a1628;
+  #site-header.scrolled {
+    background: rgba(10,22,40,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.35);
   }
 </style>

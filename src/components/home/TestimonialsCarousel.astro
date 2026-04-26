@@ -11,16 +11,27 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section class="section-pad bg-navy-900 text-white">
-  <div class="container-wide">
-    <div class="text-center max-w-2xl mx-auto mb-12">
+<section class="section-pad bg-navy-900 text-white relative overflow-hidden">
+  <!-- Subtle dot pattern -->
+  <div class="absolute inset-0 opacity-[0.035]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 28px 28px;"></div>
+  <!-- Gradient accent top -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/40 to-transparent"></div>
+
+  <div class="relative container-wide">
+    <div class="text-center max-w-2xl mx-auto mb-14 reveal">
+      <span class="inline-block text-orange-400 font-semibold text-sm uppercase tracking-widest mb-3">Reference</span>
       <h2 class="section-title text-white mb-3">{t('testimonials.title')}</h2>
-      <p class="text-white/60">{t('testimonials.subtitle')}</p>
+      <p class="text-white/50">{t('testimonials.subtitle')}</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {testimonials.map((item) => (
-        <div class="bg-navy-800 rounded-2xl p-6 flex flex-col gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {testimonials.map((item, i) => (
+        <div class={`relative bg-navy-800/70 border border-white/8 rounded-2xl p-6 flex flex-col gap-4 hover:border-orange-500/30 hover:bg-navy-800 transition-all duration-300 reveal reveal-delay-${Math.min(i + 1, 4)}`}>
+          <!-- Large quote mark decoration -->
+          <svg class="absolute top-4 right-5 w-8 h-8 text-orange-500/15" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+
           <!-- Stars -->
           <div class="flex gap-0.5">
             {[...Array(item.rating)].map(() => (
@@ -29,18 +40,20 @@ const t = useTranslations(lang);
               </svg>
             ))}
           </div>
+
           <!-- Quote -->
-          <blockquote class="text-white/80 text-sm leading-relaxed flex-1">
+          <blockquote class="text-white/75 text-sm leading-relaxed flex-1 italic">
             "{item.text}"
           </blockquote>
+
           <!-- Author -->
-          <div class="flex items-center gap-3 pt-2 border-t border-white/10">
-            <div class="w-9 h-9 rounded-full bg-orange-500/20 flex items-center justify-center text-orange-400 font-display font-bold text-sm shrink-0">
+          <div class="flex items-center gap-3 pt-3 border-t border-white/8">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white font-display font-bold text-sm shrink-0 shadow-md shadow-orange-500/20">
               {item.name.charAt(0)}
             </div>
             <div>
               <p class="text-white font-semibold text-sm leading-tight">{item.name}</p>
-              <p class="text-white/50 text-xs">{item.role}</p>
+              <p class="text-white/40 text-xs mt-0.5">{item.role}</p>
             </div>
           </div>
         </div>
