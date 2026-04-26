@@ -18,9 +18,11 @@
   --color-silver-200: #e2e6ec;
   --color-silver-300: #c9d0db;
   --color-silver-400: #9aa3b0;
-  --color-orange-400: #fb923c;
-  --color-orange-500: #f97316;
-  --color-orange-600: #ea6c0a;
+  --color-orange-300: #6ee7b7;
+  --color-orange-400: #34d399;
+  --color-orange-500: #10b981;
+  --color-orange-600: #059669;
+  --color-orange-700: #047857;
 
   /* Typography */
   --font-display: 'Montserrat', sans-serif;

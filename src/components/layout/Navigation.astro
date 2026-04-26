@@ -129,6 +129,9 @@ const currentPath = Astro.url.pathname;
     }
   }
   updateHeader();
+  if (!document.body.dataset.hero) {
+    header?.classList.add('scrolled');
+  }
   window.addEventListener('scroll', updateHeader, { passive: true });
 
   // Mobile menu toggle

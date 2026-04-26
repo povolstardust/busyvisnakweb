@@ -13,9 +13,10 @@ interface Props {
   canonicalUrl?: string;
   noindex?: boolean;
   class?: string;
+  heroPage?: boolean;
 }
 
-const { title, description, lang, ogImage, canonicalUrl, noindex, class: className } = Astro.props;
+const { title, description, lang, ogImage, canonicalUrl, noindex, class: className, heroPage } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -30,7 +31,7 @@ const { title, description, lang, ogImage, canonicalUrl, noindex, class: classNa
       noindex={noindex}
     />
   </head>
-  <body class={className}>
+  <body class={className} data-hero={heroPage ? 'true' : undefined}>
     <Navigation lang={lang} />
     <main>
       <slot />
