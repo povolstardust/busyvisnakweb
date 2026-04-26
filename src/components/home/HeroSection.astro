@@ -10,13 +10,9 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const inquiryHref = lang === 'en' ? '/en/inquiry' : '/poptavka';
 const fleetHref = lang === 'en' ? '/en/fleet' : '/flotila';
-
-const stats = lang === 'cs'
-  ? [{ value: '30+', label: 'let zkušeností' }, { value: '500+', label: 'cest ročně' }, { value: '3', label: 'vozidla' }, { value: '4.9', label: '★ hodnocení' }]
-  : [{ value: '30+', label: 'years of experience' }, { value: '500+', label: 'trips per year' }, { value: '3', label: 'vehicles' }, { value: '4.9', label: '★ rating' }];
 ---
 
-<section class="relative bg-navy-900 text-white overflow-hidden min-h-[92vh] flex items-center">
+<section class="relative bg-navy-900 text-white overflow-hidden min-h-[92vh] flex items-center -mt-16 md:-mt-20 pt-16 md:pt-20">
   <!-- Gradient overlay -->
   <div class="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-900/88 to-navy-800/40 z-10"></div>
 
@@ -133,15 +129,6 @@ const stats = lang === 'cs'
       </div>
     </div>
 
-    <!-- Stats grid (desktop right side) -->
-    <div class="hidden lg:grid grid-cols-2 gap-4 absolute right-0 bottom-0 w-72">
-      {stats.map((s, i) => (
-        <div class={`bg-white/8 backdrop-blur-sm border border-white/12 rounded-2xl p-5 reveal reveal-delay-${i + 1}`}>
-          <p class="font-display font-black text-3xl text-orange-400 leading-none mb-1">{s.value}</p>
-          <p class="text-white/55 text-xs font-medium uppercase tracking-wide">{s.label}</p>
-        </div>
-      ))}
-    </div>
   </div>
 
   <!-- Scroll indicator -->
